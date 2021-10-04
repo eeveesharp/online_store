@@ -6,18 +6,19 @@ namespace ConsoleApp2
 {
     class SingUp
     {
-        private string login;
-        private string password;
-
         public void SingUpMenu()
         {
-            GetLogin();
-            GetPassword();
+            User user = new User();
+            user.Name = GetName();
+            user.LastName = GetLastName();
+            user.Login = GetLogin();
+            user.Password = GetPassword();          
         }
 
         private string GetPassword()
         {
             Console.WriteLine("Enter password");
+            string password;
             password = Console.ReadLine();
             Console.Clear();
 
@@ -27,10 +28,31 @@ namespace ConsoleApp2
         private string GetLogin()
         {
             Console.WriteLine("Enter login");
+            string login;
             login = Console.ReadLine();
             Console.Clear();
 
             return login;
+        }
+
+        private string GetName()
+        {
+            Console.WriteLine("Enter name");
+            string name;
+            name = Console.ReadLine();
+            Console.Clear();
+
+            return name;
+        }
+
+        private string GetLastName()
+        {
+            Console.WriteLine("Enter lastName");
+            string lastName;
+            lastName = Console.ReadLine();
+            Console.Clear();
+
+            return lastName;
         }
     }
 }
