@@ -1,21 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Newtonsoft.Json;
 
-namespace ConsoleApp2
+namespace Online_Shop
 {
-    class User
+    public class User
     {
-        public string Name { get; set; }
-        public string LastName { get; set; }
-        public string Login { get; set; }
-        public string Password { get; set; }
-        public SingUp SingUp { get; set; }
+        public string FirstName { get; private set; }
 
-        public User(string name,string lastName,string login,string password)
+        public string LastName { get; private set; }
+
+        public string Login { get; private set; }
+
+        public string Password { get; private set; }
+
+        [JsonConstructor]
+        public User(string firstName,
+            string lastName,
+            string login,
+            string password)
         {
-            Name = name;
+            FirstName = firstName;
             LastName = lastName;
+            Login = login;
+            Password = password;
+        }
+
+        public User(
+             string login,
+             string password)
+        {
             Login = login;
             Password = password;
         }

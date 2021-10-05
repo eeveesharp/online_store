@@ -1,29 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace ConsoleApp2
+namespace Online_Shop
 {
-    class LogMenu
+    public class LogMenu
     {
-        public void Menu()
+        public void ShowMenu()
         {
+            int menu;
+            SignUp singUp = new SignUp();
+            SignIn singIn = new SignIn();
             Console.WriteLine("1.Sign in\n2.Sign up");
-            int menu = GetCorrectNumber();
-            SingUp singUp = new SingUp();
-            SingIn singIn = new SingIn();
+            menu = GetCorrectNumber();
 
             switch (menu)
             {
                 case 1:
                     {
-                        singIn.SingInMenu();
+                        singIn.SignInMenu();
                         break;
                     }
 
                 case 2:
                     {
-                        singUp.SingUpMenu();
+                        singUp.SignUpMenu();
                         break;
                     }
                 default:
@@ -36,7 +35,7 @@ namespace ConsoleApp2
         {
             int number;
 
-            while (!int.TryParse(Console.ReadLine(),out number))
+            while (!int.TryParse(Console.ReadLine(), out number))
             {
                 Console.WriteLine("Error");
             }

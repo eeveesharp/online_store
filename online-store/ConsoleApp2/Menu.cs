@@ -1,20 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace ConsoleApp2
+namespace Online_Shop
 {
-    class Menu
+    public class Menu
     {
-        public void MainMenu()
+        public void ShowMainMenu()
         {
-            Console.WriteLine("1.Show catalog\n2.Show basket\n3.Product search by name\n4.Show history buy");
-            int menu = GetCorrectNumber();
+            int menu;
+            Product product = new Product();
+            Console.WriteLine("1.Show catalog\n2.Show basket\n3.Product search by name\n4.Show history buy\n5.Exit");
+            menu = GetCorrectNumber();
 
             switch (menu)
             {
                 case 1:
                     {
+                        product.GetProduct();
                         break;
                     }
                 case 2:
@@ -29,6 +30,11 @@ namespace ConsoleApp2
                     {
                         break;
                     }
+                case 5:
+                    {
+                        Environment.Exit(0);
+                        break;
+                    }
                 default:
                     break;
             }
@@ -38,7 +44,7 @@ namespace ConsoleApp2
         {
             int number;
 
-            while (!int.TryParse(Console.ReadLine(),out number))
+            while (!int.TryParse(Console.ReadLine(), out number))
             {
                 Console.WriteLine("Error");
             }

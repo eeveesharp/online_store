@@ -6,14 +6,44 @@ using System.Text.Json;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 
-namespace ConsoleApp2
+namespace Online_Shop
 {
-    class SingUp
+    public class SignUp
     {
-        
-        public void SingUpMenu()
-        {            
-            User user = new User(GetName(), GetLastName(), GetLogin(), GetPassword());          
+        public void SignUpMenu()
+        {
+            File.Read();
+            User user = new User(GetName(),
+                            GetLastName(),
+                            GetLogin(),
+                            GetPassword());
+
+            while (!IsCheckSignUp(user.Login))
+            {
+                Console.WriteLine("User is existed");
+
+                user = new User(GetName(),
+                            GetLastName(),
+                            GetLogin(),
+                            GetPassword());
+            }
+            Storage.Users.Add(user);
+            File.Write(Storage.Users);
+
+            Storage.CurrentUser = user;
+        }
+
+        private bool IsCheckSignUp(string login)
+        {
+            for (int i = 0; i < Storage.Users.Count; i++)
+            {
+                if (login == Storage.Users[i].Login)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         private string GetPassword()

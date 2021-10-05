@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace ConsoleApp2
+namespace Online_Shop
 {
-    class Storage
+    public static class Storage
     {
-        List<User> userList = new List<User>();
+        public static List<User> Users { get; set; }
+
+        public static User CurrentUser { get; set; }
     }
 }

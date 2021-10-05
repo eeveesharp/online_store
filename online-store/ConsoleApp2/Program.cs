@@ -1,13 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 
-namespace ConsoleApp2
+namespace Online_Shop
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
+            Storage.Users = new List<User>();
             LogMenu logMenu = new LogMenu();
-            logMenu.Menu();
+            Menu menu = new Menu();
+            logMenu.ShowMenu();
+            menu.ShowMainMenu();
         }
     }
 }

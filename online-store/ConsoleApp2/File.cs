@@ -1,36 +1,45 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text.Json;
 
-
-namespace ConsoleApp2
+namespace Online_Shop
 {
-    public class File
+    public static class File
     {
-        User user;
-        public void WriteFile()
+        public static void Write(List<User> users)
         {
-            List<User> userList = new List<User>();
-            userList.Add(user);
-
-            for (int i = 0; i < userList.Count; i++)
+            using (FileStream fstream = new FileStream($"users.json", FileMode.Create))
             {
-                System.IO.File.AppendAllText("input.json", JsonConvert.SerializeObject(userList[i]));
+                byte[] array = System.Text.Encoding.Default.GetBytes(JsonConvert.SerializeObject(users));
+                fstream.Write(array, 0, array.Length);
             }
         }
 
-        public void ReadFile()
+        public static void Read()
         {
-            JsonTextReader reader = new JsonTextReader(new StreamReader("input.json"));
-            reader.SupportMultipleContent = true;
+            Storage.Users = new List<User>();
+            string fileContent = string.Empty;
 
-            while (true)
+            try
             {
-                if (!reader.Read())
+                using (FileStream fstream = System.IO.File.OpenRead("users.json"))
                 {
-                    break;
+                    byte[] array = new byte[fstream.Length];
+                    fstream.Read(array, 0, array.Length);
+                    fileContent = System.Text.Encoding.Default.GetString(array);
                 }
+            }
+            catch (FileNotFoundException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            Storage.Users = JsonConvert.DeserializeObject<List<User>>(fileContent);
+
+            if (Storage.Users is null)
+            {
+                Storage.Users = new List<User>();
             }
         }
     }
