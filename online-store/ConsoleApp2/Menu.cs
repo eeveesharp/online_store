@@ -4,32 +4,34 @@ using System.Text;
 
 namespace ConsoleApp2
 {
-    class LogMenu
+    class Menu
     {
-        public void Menu()
+        public void MainMenu()
         {
-            Console.WriteLine("1.Sign in\n2.Sign up");
+            Console.WriteLine("1.Show catalog\n2.Show basket\n3.Product search by name\n4.Show history buy");
             int menu = GetCorrectNumber();
-            SingUp singUp = new SingUp();
-            SingIn singIn = new SingIn();
 
             switch (menu)
             {
                 case 1:
                     {
-                        singIn.SingInMenu();
                         break;
                     }
-
                 case 2:
                     {
-                        singUp.SingUpMenu();
+                        break;
+                    }
+                case 3:
+                    {
+                        break;
+                    }
+                case 4:
+                    {
                         break;
                     }
                 default:
                     break;
             }
-
         }
 
         private int GetCorrectNumber()
@@ -40,8 +42,6 @@ namespace ConsoleApp2
             {
                 Console.WriteLine("Error");
             }
-
-            Console.Clear();
 
             return number;
         }

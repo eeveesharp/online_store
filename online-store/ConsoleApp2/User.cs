@@ -6,16 +6,18 @@ namespace ConsoleApp2
 {
     class User
     {
-        private string name;
-        private string lastName;
-        private string login;
-        private string password;
         public string Name { get; set; }
         public string LastName { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
         public SingUp SingUp { get; set; }
 
-
+        public User(string name,string lastName,string login,string password)
+        {
+            Name = name;
+            LastName = lastName;
+            Login = login;
+            Password = password;
+        }
     }
 }

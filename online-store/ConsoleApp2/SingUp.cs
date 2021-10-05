@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
+using System.Text.Json;
+using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace ConsoleApp2
 {
     class SingUp
     {
+        
         public void SingUpMenu()
-        {
-            User user = new User();
-            user.Name = GetName();
-            user.LastName = GetLastName();
-            user.Login = GetLogin();
-            user.Password = GetPassword();          
+        {            
+            User user = new User(GetName(), GetLastName(), GetLogin(), GetPassword());          
         }
 
         private string GetPassword()

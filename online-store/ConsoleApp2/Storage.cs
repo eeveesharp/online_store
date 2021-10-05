@@ -4,8 +4,8 @@ using System.Text;
 
 namespace ConsoleApp2
 {
-    class ReadFile
+    class Storage
     {
-
+        List<User> userList = new List<User>();
     }
 }
