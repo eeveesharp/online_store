@@ -16,7 +16,7 @@ namespace Online_Shop
 
         public string Description { get; private set; }
 
-        public DateTime Data { get; set; }
+        public DateTime Date { get; set; }
 
         [JsonConstructor]
         public Product(int id, string name,

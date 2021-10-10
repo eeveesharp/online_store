@@ -33,7 +33,7 @@ namespace Online_Shop
                     Console.WriteLine("Enter ID");
                     id = GetNumber(Storage.Products.Count + 1);
                     Console.WriteLine("Enter quantity");
-                    quantity = GetQuantityProduct();
+                    quantity = GetQuantityProduct(Storage.Products[id - 1].Quantity);
 
                     if (Storage.Basket is null)
                     {
@@ -53,7 +53,7 @@ namespace Online_Shop
                             Storage.Products[i].Quantity -= quantity;
                             File.Write(Storage.Products);
                             productBasket.Quantity = quantity;
-                            productBasket.Data = DateTime.Now;
+                            productBasket.Date = DateTime.Now;
                             Storage.HistoryBuy.Add(productBasket);
                             Storage.Basket.Add(productBasket);                           
                             File.WriteHistoryBuy(Storage.HistoryBuy);
@@ -96,17 +96,17 @@ namespace Online_Shop
 
             for (int i = 0; i < Storage.HistoryBuy.Count; i++)
             {
-                Console.WriteLine($"{Storage.HistoryBuy[i].ID}\t {Storage.HistoryBuy[i].Name}\t {Storage.HistoryBuy[i].Price}\t {Storage.HistoryBuy[i].Quantity}\t\t {Storage.HistoryBuy[i].Data}");
+                Console.WriteLine($"{Storage.HistoryBuy[i].ID}\t {Storage.HistoryBuy[i].Name}\t {Storage.HistoryBuy[i].Price}\t {Storage.HistoryBuy[i].Quantity}\t\t {Storage.HistoryBuy[i].Date}");
             }
         }
 
-        private int GetQuantityProduct()
+        private int GetQuantityProduct(int number)
         {
             int quantity;
 
-            while (!int.TryParse(Console.ReadLine(), out quantity))
+            while (!int.TryParse(Console.ReadLine(), out quantity) || quantity > number)
             {
-                Console.WriteLine("Erorr");
+                Console.WriteLine("Erorr.Enter the correct value");
             }
 
             return quantity;
