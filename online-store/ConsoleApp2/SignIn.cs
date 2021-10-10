@@ -24,7 +24,7 @@ namespace Online_Shop
             Console.Title = $"User:{user.Login}";
 
             Storage.CurrentUser = user;
-            File.ReadBasket();
+            //File.ReadBasket();
         }
 
         private bool IsCheckSignIn(string login, string password)

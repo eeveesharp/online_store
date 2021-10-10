@@ -8,6 +8,7 @@ namespace Online_Shop
     {
         public void AddProduct()
         {
+            DateTime date1 = new DateTime();
             Product product = new Product();
             int id;
             int quantity;
@@ -19,6 +20,7 @@ namespace Online_Shop
                 Console.WriteLine("Would you like to add a product?");
                 Console.WriteLine("1.Yes\n2.No");
                 numberMenu = GetNumber(count: 2);
+
                 if (numberMenu == 2)
                 {
                     Console.Clear();
@@ -41,6 +43,7 @@ namespace Online_Shop
                         if (id == Storage.Products[i].ID)
                         {
                             var productBasket = Storage.Products[i];
+                            //Storage.Basket[i].Data = date1;
                             Storage.Products[i].Quantity -= quantity;
                             Storage.Basket.Add(productBasket);
                             File.Write(Storage.Products);
@@ -68,9 +71,26 @@ namespace Online_Shop
 
         public void ShowBasket()
         {
+            if (Storage.Basket is null)
+            {
+                Console.WriteLine("The basket is empty");
+            }
+            else
+            {
+                for (int i = 0; i < Storage.Basket.Count; i++)
+                {
+                    Console.WriteLine($"{Storage.Basket[i].ID}\t {Storage.Basket[i].Name}\t {Storage.Basket[i].Price}\t {Storage.Basket[i].Quantity}");
+                }
+            }          
+        }
+
+        public void ShowHistoryBuy()
+        {
+            File.ReadBasket();
+
             for (int i = 0; i < Storage.Basket.Count; i++)
             {
-                Console.WriteLine($"{Storage.Basket[i].ID}\t {Storage.Basket[i].Name}\t {Storage.Basket[i].Price}\t {Storage.Products[i].Quantity}\t  {Storage.Products[i].Description}\t");
+                Console.WriteLine($"{Storage.Basket[i].ID}\t {Storage.Basket[i].Name}\t {Storage.Basket[i].Price}\t {Storage.Basket[i].Quantity}\t\t {Storage.Basket[i].Data}");
             }
         }
 

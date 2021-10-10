@@ -25,7 +25,7 @@ namespace Online_Shop
                         }
                     case 2:
                         {
-
+                            basket.ShowBasket();
                             break;
                         }
                     case 3:
@@ -33,8 +33,8 @@ namespace Online_Shop
                             break;
                         }
                     case 4:
-                        {
-                            basket.ShowBasket();
+                        {                            
+                            basket.ShowHistoryBuy();
                             break;
                         }
                     case 5:
