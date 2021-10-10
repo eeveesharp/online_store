@@ -21,6 +21,8 @@ namespace Online_Shop
                     GetPassword());
             }
 
+            Console.Title = $"User:{user.Login}";
+
             Storage.CurrentUser = user;
             File.ReadBasket();
         }
