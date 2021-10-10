@@ -12,6 +12,6 @@ namespace Online_Shop
 
         public static List<Product> Basket { get; set; }
 
-        //public static List<Product>  { get; set; }
+        public static List<Product> HistoryBuy { get; set; }
     }
 }

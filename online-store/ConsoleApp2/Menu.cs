@@ -13,7 +13,7 @@ namespace Online_Shop
                 Basket basket = new Basket();
                 Console.WriteLine("1.Show catalog\n2.Show basket\n3.Product search by name\n4.Show history buy\n5.Exit");
                 menu = GetCorrectNumber();
-                File.ReadProduct();
+                File.ReadHistoryBuy();
 
                 switch (menu)
                 {

@@ -25,7 +25,7 @@ namespace Online_Shop
             }
         }
 
-        public static void WriteBasket(List<Product> baskets)
+        public static void WriteHistoryBuy(List<Product> baskets)
         {
             using (FileStream fstream = new FileStream($"{Storage.CurrentUser.Login}.json", FileMode.Create))
             {
@@ -88,9 +88,9 @@ namespace Online_Shop
             }
         }
 
-        public static void ReadBasket()
+        public static void ReadHistoryBuy()
         {
-            Storage.Basket = new List<Product>();
+            Storage.HistoryBuy = new List<Product>();
             string fileContent = string.Empty;
 
             try
@@ -107,11 +107,11 @@ namespace Online_Shop
                 Console.WriteLine(e.Message);
             }
 
-            Storage.Basket = JsonConvert.DeserializeObject<List<Product>>(fileContent);
+            Storage.HistoryBuy = JsonConvert.DeserializeObject<List<Product>>(fileContent);
 
-            if (Storage.Basket is null)
+            if (Storage.HistoryBuy is null)
             {
-                Storage.Basket = new List<Product>();
+                Storage.HistoryBuy = new List<Product>();
             }
         }
     }

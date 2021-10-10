@@ -8,13 +8,15 @@ namespace Online_Shop
     {
         public void AddProduct()
         {
-            DateTime date1 = new DateTime();
+            DateTime date = new DateTime();
             Product product = new Product();
             int id;
             int quantity;
 
             while (true)
             {
+                Console.Clear();
+                File.ReadProduct();
                 int numberMenu;
                 product.ShowProduct();
                 Console.WriteLine("Would you like to add a product?");
@@ -38,21 +40,25 @@ namespace Online_Shop
                         Storage.Basket = new List<Product>();
                     }
 
+                    if (Storage.HistoryBuy is null)
+                    {
+                        Storage.HistoryBuy = new List<Product>();
+                    }
+
                     for (int i = 0; i < Storage.Products.Count; i++)
                     {
                         if (id == Storage.Products[i].ID)
                         {
                             var productBasket = Storage.Products[i];
-                            //Storage.Basket[i].Data = date1;
                             Storage.Products[i].Quantity -= quantity;
-                            Storage.Basket.Add(productBasket);
                             File.Write(Storage.Products);
-                            Storage.Basket[i].Quantity = quantity;
-                            File.WriteBasket(Storage.Basket);
+                            productBasket.Quantity = quantity;
+                            productBasket.Data = DateTime.Now;
+                            Storage.HistoryBuy.Add(productBasket);
+                            Storage.Basket.Add(productBasket);                           
+                            File.WriteHistoryBuy(Storage.HistoryBuy);
                         }
-                    }
-
-                    Console.Clear();
+                    }                   
                 }
             }          
         }
@@ -86,11 +92,11 @@ namespace Online_Shop
 
         public void ShowHistoryBuy()
         {
-            File.ReadBasket();
+            File.ReadHistoryBuy();
 
-            for (int i = 0; i < Storage.Basket.Count; i++)
+            for (int i = 0; i < Storage.HistoryBuy.Count; i++)
             {
-                Console.WriteLine($"{Storage.Basket[i].ID}\t {Storage.Basket[i].Name}\t {Storage.Basket[i].Price}\t {Storage.Basket[i].Quantity}\t\t {Storage.Basket[i].Data}");
+                Console.WriteLine($"{Storage.HistoryBuy[i].ID}\t {Storage.HistoryBuy[i].Name}\t {Storage.HistoryBuy[i].Price}\t {Storage.HistoryBuy[i].Quantity}\t\t {Storage.HistoryBuy[i].Data}");
             }
         }
 
