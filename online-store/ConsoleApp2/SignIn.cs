@@ -6,13 +6,13 @@ namespace Online_Shop
     {
         public void SignInMenu()
         {
-            File.Read();
+            File.Read("users");
 
             User user = new User(
                 GetLogin(),
                 GetPassword());
 
-            while (!IsCheckSignIn(user.Login,user.Password))
+            while (!IsCheckSignIn(user.Login, user.Password))
             {
                 Console.WriteLine("Incorrect login or password");
 
@@ -24,7 +24,6 @@ namespace Online_Shop
             Console.Title = $"User:{user.Login}";
 
             Storage.CurrentUser = user;
-            //File.ReadBasket();
         }
 
         private bool IsCheckSignIn(string login, string password)

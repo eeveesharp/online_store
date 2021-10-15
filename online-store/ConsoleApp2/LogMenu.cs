@@ -35,7 +35,7 @@ namespace Online_Shop
         {
             int number;
 
-            while (!int.TryParse(Console.ReadLine(), out number))
+            while (!int.TryParse(Console.ReadLine(), out number) || number <= 0)
             {
                 Console.WriteLine("Error");
             }

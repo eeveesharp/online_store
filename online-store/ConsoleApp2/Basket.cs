@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Online_Shop
 {
     public class Basket
     {
+        private readonly Timer _timer = new Timer();
+        private int quantity;
+        int id;
+        Product product = new Product();
+
         public void AddProduct()
         {
-            DateTime date = new DateTime();
-            Product product = new Product();
-            int id;
-            int quantity;
+            File.ReadProduct("products");
 
             while (true)
             {
                 Console.Clear();
-                File.ReadProduct();
                 int numberMenu;
                 product.ShowProduct();
                 Console.WriteLine("Would you like to add a product?");
@@ -31,9 +31,11 @@ namespace Online_Shop
                 else
                 {
                     Console.WriteLine("Enter ID");
-                    id = GetNumber(Storage.Products.Count + 1);
+                    id = GetNumber(Storage.Products.Count);
                     Console.WriteLine("Enter quantity");
                     quantity = GetQuantityProduct(Storage.Products[id - 1].Quantity);
+
+                    _timer.Start();
 
                     if (Storage.Basket is null)
                     {
@@ -49,18 +51,22 @@ namespace Online_Shop
                     {
                         if (id == Storage.Products[i].ID)
                         {
+                            int temp;
                             var productBasket = Storage.Products[i];
-                            Storage.Products[i].Quantity -= quantity;
-                            File.Write(Storage.Products);
+                            productBasket.Quantity -= quantity;
+                            temp = productBasket.Quantity;
                             productBasket.Quantity = quantity;
-                            productBasket.Date = DateTime.Now;
-                            Storage.HistoryBuy.Add(productBasket);
-                            Storage.Basket.Add(productBasket);                           
-                            File.WriteHistoryBuy(Storage.HistoryBuy);
+                            Storage.Basket.Add(productBasket);
+                            productBasket.Quantity = temp;
                         }
-                    }                   
+                    }
                 }
-            }          
+            }
+        }
+
+        public static void DeleteProductsByTimer()
+        {
+            Storage.Basket = new List<Product>();
         }
 
         private int GetNumber(int count)
@@ -77,26 +83,61 @@ namespace Online_Shop
 
         public void ShowBasket()
         {
-            if (Storage.Basket is null)
+            for (int i = 0; i < Storage.Basket.Count; i++)
+            {
+                Console.WriteLine($"ID:{Storage.Basket[i].ID}\n NAME:{Storage.Basket[i].Name}\n PRICE:{Storage.Basket[i].Price}\n QUANTITY:{Storage.Basket[i].Quantity}\n DESCRIPTION:\n{Storage.Basket[i].Description}\n");
+                product.Line();
+            }
+        }
+
+        public void BuyProduct()
+        {
+            int menu;
+
+            if (Storage.Basket.Count == 0)
             {
                 Console.WriteLine("The basket is empty");
             }
             else
             {
-                for (int i = 0; i < Storage.Basket.Count; i++)
+                ShowBasket();
+                Console.WriteLine("Do you want to buy these products ?");
+                Console.WriteLine("1.Yes\n2.No");
+                menu = GetNumber(count: 2);
+
+                switch (menu)
                 {
-                    Console.WriteLine($"{Storage.Basket[i].ID}\t {Storage.Basket[i].Name}\t {Storage.Basket[i].Price}\t {Storage.Basket[i].Quantity}");
+                    case 1:
+                        {
+                            File.Write(Storage.Products, "products");
+                            for (int i = 0; i < Storage.Basket.Count; i++)
+                            {
+                                var productBasket = Storage.Basket[i];
+                                productBasket.Date = DateTime.Now;
+                                Storage.HistoryBuy.Add(productBasket);
+                                File.Write(Storage.HistoryBuy, Storage.CurrentUser.Login);
+                            }
+
+                            break;
+                        }
+                    case 2:
+                        {
+                            break;
+                        }
+                    default:
+                        break;
                 }
-            }          
+            }
         }
 
         public void ShowHistoryBuy()
         {
-            File.ReadHistoryBuy();
+            File.ReadHistoryBuy(Storage.CurrentUser.Login);
 
             for (int i = 0; i < Storage.HistoryBuy.Count; i++)
             {
-                Console.WriteLine($"{Storage.HistoryBuy[i].ID}\t {Storage.HistoryBuy[i].Name}\t {Storage.HistoryBuy[i].Price}\t {Storage.HistoryBuy[i].Quantity}\t\t {Storage.HistoryBuy[i].Date}");
+                Console.WriteLine($"ID:{Storage.HistoryBuy[i].ID}\n NAME:{Storage.HistoryBuy[i].Name}\n PRICE:{Storage.HistoryBuy[i].Price}\n QUANTITY:{Storage.HistoryBuy[i].Quantity}\n DESCRIPTION:\n{Storage.HistoryBuy[i].Description}\n Date:\n{Storage.HistoryBuy[i].Date}");
+                product.Line();
             }
         }
 
@@ -104,12 +145,82 @@ namespace Online_Shop
         {
             int quantity;
 
-            while (!int.TryParse(Console.ReadLine(), out quantity) || quantity > number)
+            while (!int.TryParse(Console.ReadLine(), out quantity) || quantity > number || number <= 0)
             {
-                Console.WriteLine("Erorr.Enter the correct value");
+                if (number == 0)
+                {
+                    Console.WriteLine("Not on sale");
+                }
+                else
+                {
+                    Console.WriteLine("Erorr.Enter the correct value");
+                }
             }
 
             return quantity;
+        }
+
+        public void FindProduct()
+        {
+            Console.Clear();
+            string nameProduct;
+            int count = 0;
+            int numberMenu;
+            Console.WriteLine("Enter product");
+            nameProduct = Console.ReadLine();         
+
+            for (int i = 0; i < Storage.Products.Count; i++)
+            {
+                if (nameProduct == Storage.Products[i].Name)
+                {
+                    Console.WriteLine($"ID:{Storage.Products[i].ID}\n NAME:{Storage.Products[i].Name}\n PRICE:{Storage.Products[i].Price}\n QUANTITY:{Storage.Products[i].Quantity}\n DESCRIPTION:\n{Storage.Products[i].Description}");
+                    id = Storage.Products[i].ID;
+                    product.Line();
+                    count++;
+                }
+            }
+
+            if (count == 0)
+            {
+                Console.WriteLine("Product not found");
+            }
+            else
+            {
+                Console.WriteLine("Would you like to add this product?");
+                Console.WriteLine("1.Yes\n2.No");
+                numberMenu = GetNumber(count: 2);
+
+                if (numberMenu == 2)
+                {
+                    Console.Clear();
+                    return;
+                }
+                else
+                {
+                    Console.WriteLine("Enter quantity");
+                    quantity = GetQuantityProduct(Storage.Products[id - 1].Quantity);
+
+                    _timer.Start();
+
+                    if (Storage.Basket is null)
+                    {
+                        Storage.Basket = new List<Product>();
+                    }
+
+                    if (Storage.HistoryBuy is null)
+                    {
+                        Storage.HistoryBuy = new List<Product>();
+                    }
+
+                    int temp;
+                    var productBasket = Storage.Products[id - 1];
+                    productBasket.Quantity -= quantity;
+                    temp = productBasket.Quantity;
+                    productBasket.Quantity = quantity;
+                    Storage.Basket.Add(productBasket);
+                    productBasket.Quantity = temp;
+                }
+            }
         }
     }
 }

@@ -7,53 +7,19 @@ namespace Online_Shop
 {
     public static class File
     {
-        public static void Write(List<User> users)
+        public static void Write(IEnumerable<object> items, string fileName)
         {
-            using (FileStream fstream = new FileStream($"users.json", FileMode.Create))
+            using (FileStream fstream = new FileStream($"{fileName}.json", FileMode.Create))
             {
-                byte[] array = System.Text.Encoding.Default.GetBytes(JsonConvert.SerializeObject(users));
+                byte[] array = System.Text.Encoding.Default.GetBytes(JsonConvert.SerializeObject(items));
                 fstream.Write(array, 0, array.Length);
             }
         }
 
-        public static void Write(List<Product> products)
-        {
-            using (FileStream fstream = new FileStream($"products.json", FileMode.Create))
-            {
-                byte[] array = System.Text.Encoding.Default.GetBytes(JsonConvert.SerializeObject(products));
-                fstream.Write(array, 0, array.Length);
-            }
-        }
-
-        public static void WriteHistoryBuy(List<Product> baskets)
-        {
-            using (FileStream fstream = new FileStream($"{Storage.CurrentUser.Login}.json", FileMode.Create))
-            {
-                byte[] array = System.Text.Encoding.Default.GetBytes(JsonConvert.SerializeObject(baskets));
-                fstream.Write(array, 0, array.Length);
-            }
-        }
-
-        public static void Read()
+        public static void Read(string fileName)
         {
             Storage.Users = new List<User>();
-            string fileContent = string.Empty;
-
-            try
-            {
-                using (FileStream fstream = System.IO.File.OpenRead("users.json"))
-                {
-                    byte[] array = new byte[fstream.Length];
-                    fstream.Read(array, 0, array.Length);
-                    fileContent = System.Text.Encoding.Default.GetString(array);
-                }
-            }
-            catch (FileNotFoundException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-
-            Storage.Users = JsonConvert.DeserializeObject<List<User>>(fileContent);
+            Storage.Users = JsonConvert.DeserializeObject<List<User>>(ReadTextFromFile(fileName));
 
             if (Storage.Users is null)
             {
@@ -61,26 +27,10 @@ namespace Online_Shop
             }
         }
 
-        public static void ReadProduct()
+        public static void ReadProduct(string fileName)
         {
             Storage.Products = new List<Product>();
-            string fileContent = string.Empty;
-
-            try
-            {
-                using (FileStream fstream = System.IO.File.OpenRead("products.json"))
-                {
-                    byte[] array = new byte[fstream.Length];
-                    fstream.Read(array, 0, array.Length);
-                    fileContent = System.Text.Encoding.Default.GetString(array);
-                }
-            }
-            catch (FileNotFoundException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-
-            Storage.Products = JsonConvert.DeserializeObject<List<Product>>(fileContent);
+            Storage.Products = JsonConvert.DeserializeObject<List<Product>>(ReadTextFromFile(fileName));
 
             if (Storage.Products is null)
             {
@@ -88,14 +38,24 @@ namespace Online_Shop
             }
         }
 
-        public static void ReadHistoryBuy()
+        public static void ReadHistoryBuy(string fileName)
         {
             Storage.HistoryBuy = new List<Product>();
+            Storage.HistoryBuy = JsonConvert.DeserializeObject<List<Product>>(ReadTextFromFile(fileName));
+
+            if (Storage.HistoryBuy is null)
+            {
+                Storage.HistoryBuy = new List<Product>();
+            }
+        }
+
+        private static string ReadTextFromFile(string filename)
+        {
             string fileContent = string.Empty;
 
             try
             {
-                using (FileStream fstream = System.IO.File.OpenRead($"{Storage.CurrentUser.Login}.json"))
+                using (FileStream fstream = System.IO.File.OpenRead($"{filename}.json"))
                 {
                     byte[] array = new byte[fstream.Length];
                     fstream.Read(array, 0, array.Length);
@@ -107,12 +67,7 @@ namespace Online_Shop
                 Console.WriteLine(e.Message);
             }
 
-            Storage.HistoryBuy = JsonConvert.DeserializeObject<List<Product>>(fileContent);
-
-            if (Storage.HistoryBuy is null)
-            {
-                Storage.HistoryBuy = new List<Product>();
-            }
+            return fileContent;
         }
     }
 }

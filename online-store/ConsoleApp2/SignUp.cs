@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
-using System.Text.Json;
-using Newtonsoft.Json;
-using System.Threading.Tasks;
 
 namespace Online_Shop
 {
@@ -12,7 +6,7 @@ namespace Online_Shop
     {
         public void SignUpMenu()
         {
-            File.Read();
+            File.Read("users");
             User user = new User(GetName(),
                             GetLastName(),
                             GetLogin(),
@@ -28,7 +22,7 @@ namespace Online_Shop
                             GetPassword());
             }
             Storage.Users.Add(user);
-            File.Write(Storage.Users);
+            File.Write(Storage.Users, "users");
 
             Storage.CurrentUser = user;
         }

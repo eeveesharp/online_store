@@ -9,11 +9,12 @@ namespace Online_Shop
             while (true)
             {
                 int menu;
-                Product product = new Product();
                 Basket basket = new Basket();
+                Product product = new Product();
                 Console.WriteLine("1.Show catalog\n2.Show basket\n3.Product search by name\n4.Show history buy\n5.Exit");
                 menu = GetCorrectNumber();
-                File.ReadHistoryBuy();
+                File.ReadHistoryBuy(Storage.CurrentUser.Login);
+                File.ReadProduct("products");
 
                 switch (menu)
                 {
@@ -25,15 +26,17 @@ namespace Online_Shop
                         }
                     case 2:
                         {
-                            basket.ShowBasket();
+                            //basket.ShowBasket();
+                            basket.BuyProduct();
                             break;
                         }
                     case 3:
                         {
+                            basket.FindProduct();
                             break;
                         }
                     case 4:
-                        {                            
+                        {
                             basket.ShowHistoryBuy();
                             break;
                         }
@@ -52,7 +55,7 @@ namespace Online_Shop
         {
             int number;
 
-            while (!int.TryParse(Console.ReadLine(), out number))
+            while (!int.TryParse(Console.ReadLine(), out number) || number <= 0)
             {
                 Console.WriteLine("Error");
             }
