@@ -9,6 +9,7 @@ namespace Online_Shop
             Storage.Users = new List<User>();
             LogMenu logMenu = new LogMenu();
             Menu menu = new Menu();
+            File.ReadProduct("products");
             logMenu.ShowMenu();
             menu.ShowMainMenu();
         }

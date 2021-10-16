@@ -7,6 +7,7 @@ namespace Online_Shop
         public void SignUpMenu()
         {
             File.Read("users");
+
             User user = new User(GetName(),
                             GetLastName(),
                             GetLogin(),
@@ -23,8 +24,9 @@ namespace Online_Shop
             }
             Storage.Users.Add(user);
             File.Write(Storage.Users, "users");
-
             Storage.CurrentUser = user;
+
+            Console.Title = $"User:{user.Login}";
         }
 
         private bool IsCheckSignUp(string login)

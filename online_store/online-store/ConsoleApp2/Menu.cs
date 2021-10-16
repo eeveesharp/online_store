@@ -10,23 +10,20 @@ namespace Online_Shop
             {
                 int menu;
                 Basket basket = new Basket();
-                Product product = new Product();
                 Console.WriteLine("1.Show catalog\n2.Show basket\n3.Product search by name\n4.Show history buy\n5.Exit");
                 menu = GetCorrectNumber();
                 File.ReadHistoryBuy(Storage.CurrentUser.Login);
-                File.ReadProduct("products");
+
 
                 switch (menu)
                 {
                     case 1:
                         {
-                            //product.GetProduct();
                             basket.AddProduct();
                             break;
                         }
                     case 2:
                         {
-                            //basket.ShowBasket();
                             basket.BuyProduct();
                             break;
                         }

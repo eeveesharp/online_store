@@ -47,6 +47,7 @@ namespace Online_Shop
                     Basket.DeleteProductsByTimer();
                     Console.WriteLine("Basket is empty");
                     IsStop = true;
+                    File.ReadProduct("products");
                 }
             }
         }
