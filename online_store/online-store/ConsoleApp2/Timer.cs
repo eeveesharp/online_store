@@ -10,15 +10,15 @@ namespace Online_Shop
 {
     public class Timer
     {
-        private readonly IConfiguration _configuration = new ConfigurationBuilder()
-                .AddJsonFile("timer.json")
-                .Build();
-
         public int Step { get; private set; }
 
         public bool IsStop { get; private set; } = false;
 
         public int ExpiredTime { get; private set; }
+
+        private readonly IConfiguration _configuration = new ConfigurationBuilder()
+                .AddJsonFile("timer.json")
+                .Build();
 
         public Timer()
         {
@@ -31,6 +31,7 @@ namespace Online_Shop
             if (!IsStop)
             {
                 Task task = new Task(Work);
+
                 task.Start();
             }
         }
@@ -45,8 +46,11 @@ namespace Online_Shop
                 if (ExpiredTime < 0)
                 {
                     Basket.DeleteProductsByTimer();
+
                     Console.WriteLine("Basket is empty");
+
                     IsStop = true;
+
                     File.ReadProduct("products");
                 }
             }

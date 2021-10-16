@@ -8,8 +8,11 @@ namespace Online_Shop
         {
             int menu;
             SignUp singUp = new SignUp();
+
             SignIn singIn = new SignIn();
+
             Console.WriteLine("1.Sign in\n2.Sign up");
+
             menu = GetCorrectNumber();
 
             switch (menu)
@@ -17,12 +20,14 @@ namespace Online_Shop
                 case 1:
                     {
                         singIn.SignInMenu();
+
                         break;
                     }
 
                 case 2:
                     {
                         singUp.SignUpMenu();
+
                         break;
                     }
                 default:

@@ -4,14 +4,18 @@ namespace Online_Shop
 {
     public class Menu
     {
-        public void ShowMainMenu()
+        public void Show()
         {
             while (true)
             {
                 int menu;
+
                 Basket basket = new Basket();
+
                 Console.WriteLine("1.Show catalog\n2.Show basket\n3.Product search by name\n4.Show history buy\n5.Exit");
+
                 menu = GetCorrectNumber();
+
                 File.ReadHistoryBuy(Storage.CurrentUser.Login);
 
 
@@ -20,21 +24,25 @@ namespace Online_Shop
                     case 1:
                         {
                             basket.AddProduct();
+
                             break;
                         }
                     case 2:
                         {
                             basket.BuyProduct();
+
                             break;
                         }
                     case 3:
                         {
                             basket.FindProduct();
+
                             break;
                         }
                     case 4:
                         {
                             basket.ShowHistoryBuy();
+
                             break;
                         }
                     case 5:
@@ -43,6 +51,7 @@ namespace Online_Shop
                             break;
                         }
                     default:
+
                         break;
                 }
             }

@@ -22,11 +22,15 @@ namespace Online_Shop
                             GetLogin(),
                             GetPassword());
             }
+
             Storage.Users.Add(user);
-            File.Write(Storage.Users, "users");
+
+            File.Write(Storage.Users,
+                "users");
+
             Storage.CurrentUser = user;
 
-            Console.Title = $"User:{user.Login}";
+            Console.Title = $"User: {user.Login}";
         }
 
         private bool IsCheckSignUp(string login)
@@ -45,8 +49,11 @@ namespace Online_Shop
         private string GetPassword()
         {
             Console.WriteLine("Enter password");
+
             string password;
+
             password = Console.ReadLine();
+
             Console.Clear();
 
             return password;
@@ -55,8 +62,11 @@ namespace Online_Shop
         private string GetLogin()
         {
             Console.WriteLine("Enter login");
+
             string login;
+
             login = Console.ReadLine();
+
             Console.Clear();
 
             return login;
@@ -65,8 +75,11 @@ namespace Online_Shop
         private string GetName()
         {
             Console.WriteLine("Enter name");
+
             string name;
+
             name = Console.ReadLine();
+
             Console.Clear();
 
             return name;
@@ -75,8 +88,11 @@ namespace Online_Shop
         private string GetLastName()
         {
             Console.WriteLine("Enter lastName");
+
             string lastName;
+
             lastName = Console.ReadLine();
+
             Console.Clear();
 
             return lastName;

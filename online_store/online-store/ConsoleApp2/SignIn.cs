@@ -12,7 +12,8 @@ namespace Online_Shop
                 GetLogin(),
                 GetPassword());
 
-            while (!IsCheckSignIn(user.Login, user.Password))
+            while (!IsCheckSignIn(user.Login, 
+                user.Password))
             {
                 Console.WriteLine("Incorrect login or password");
 
@@ -21,16 +22,18 @@ namespace Online_Shop
                     GetPassword());
             }
 
-            Console.Title = $"User:{user.Login}";
+            Console.Title = $"User: {user.Login}";
 
             Storage.CurrentUser = user;
         }
 
-        private bool IsCheckSignIn(string login, string password)
+        private bool IsCheckSignIn(string login, 
+            string password)
         {
             for (int i = 0; i < Storage.Users.Count; i++)
             {
-                if (login == Storage.Users[i].Login && password == Storage.Users[i].Password)
+                if (login == Storage.Users[i].Login 
+                    && password == Storage.Users[i].Password)
                 {
                     return true;
                 }
@@ -42,8 +45,11 @@ namespace Online_Shop
         private string GetPassword()
         {
             Console.WriteLine("Enter password");
+
             string password;
+
             password = Console.ReadLine();
+
             Console.Clear();
 
             return password;
@@ -52,8 +58,11 @@ namespace Online_Shop
         private string GetLogin()
         {
             Console.WriteLine("Enter login");
+
             string login;
+
             login = Console.ReadLine();
+
             Console.Clear();
 
             return login;

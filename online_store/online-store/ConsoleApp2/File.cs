@@ -7,11 +7,13 @@ namespace Online_Shop
 {
     public static class File
     {
-        public static void Write(IEnumerable<object> items, string fileName)
+        public static void Write(IEnumerable<object> items,
+            string fileName)
         {
             using (FileStream fstream = new FileStream($"{fileName}.json", FileMode.Create))
             {
                 byte[] array = System.Text.Encoding.Default.GetBytes(JsonConvert.SerializeObject(items));
+
                 fstream.Write(array, 0, array.Length);
             }
         }
@@ -19,6 +21,7 @@ namespace Online_Shop
         public static void Read(string fileName)
         {
             Storage.Users = new List<User>();
+
             Storage.Users = JsonConvert.DeserializeObject<List<User>>(ReadTextFromFile(fileName));
 
             if (Storage.Users is null)
@@ -30,6 +33,7 @@ namespace Online_Shop
         public static void ReadProduct(string fileName)
         {
             Storage.Products = new List<Product>();
+
             Storage.Products = JsonConvert.DeserializeObject<List<Product>>(ReadTextFromFile(fileName));
 
             if (Storage.Products is null)
@@ -41,6 +45,7 @@ namespace Online_Shop
         public static void ReadHistoryBuy(string fileName)
         {
             Storage.HistoryBuy = new List<Product>();
+
             Storage.HistoryBuy = JsonConvert.DeserializeObject<List<Product>>(ReadTextFromFile(fileName));
 
             if (Storage.HistoryBuy is null)
@@ -58,7 +63,9 @@ namespace Online_Shop
                 using (FileStream fstream = System.IO.File.OpenRead($"{filename}.json"))
                 {
                     byte[] array = new byte[fstream.Length];
+
                     fstream.Read(array, 0, array.Length);
+
                     fileContent = System.Text.Encoding.Default.GetString(array);
                 }
             }

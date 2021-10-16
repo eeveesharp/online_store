@@ -5,10 +5,20 @@ namespace Online_Shop
 {
     public class Basket
     {
-        private readonly Timer _timer = new Timer();
-        private int quantity;
-        int id;
-        private readonly Product product = new Product();
+        private readonly Timer _timer;
+
+        private int _quantity;
+
+        private int _id;
+
+        private readonly Product _product;
+
+        public Basket()
+        {
+            _timer = new Timer();
+
+            _product = new Product();
+        }
 
         public void AddProduct()
         {
@@ -17,23 +27,32 @@ namespace Online_Shop
             while (true)
             {
                 Console.Clear();
+
                 int numberMenu;
-                product.ShowProduct();
+
+                _product.ShowProduct();
+
                 Console.WriteLine("Would you like to add a product?");
+
                 Console.WriteLine("1.Yes\n2.No");
+
                 numberMenu = GetNumber(count: 2);
 
                 if (numberMenu == 2)
                 {
                     Console.Clear();
+
                     return;
                 }
                 else
                 {
                     Console.WriteLine("Enter ID");
-                    id = GetId();
+
+                    _id = GetId();
+
                     Console.WriteLine("Enter quantity");
-                    quantity = GetQuantityProduct(Storage.Products[id].Quantity);
+
+                    _quantity = GetQuantityProduct(Storage.Products[_id].Quantity);
 
                     _timer.Start();
 
@@ -47,8 +66,12 @@ namespace Online_Shop
                         Storage.HistoryBuy = new List<Product>();
                     }
 
-                    Storage.Basket.Add(new Product(Storage.Products[id].ID, Storage.Products[id].Name, Storage.Products[id].Price, quantity, Storage.Products[id].Description));
-                    Storage.Products[id].Quantity -= quantity;
+                    Storage.Basket.Add(new Product(Storage.Products[_id].ID, 
+                        Storage.Products[_id].Name, 
+                        Storage.Products[_id].Price, _quantity, 
+                        Storage.Products[_id].Description));
+
+                    Storage.Products[_id].Quantity -= _quantity;
                 }
             }
         }
@@ -62,7 +85,9 @@ namespace Online_Shop
         {
             int number;
 
-            while (!int.TryParse(Console.ReadLine(), out number) || number > count || number <= 0)
+            while (!int.TryParse(Console.ReadLine(), out number)
+                || number > count 
+                || number <= 0)
             {
                 Console.WriteLine("Error.Id");
             }
@@ -74,7 +99,10 @@ namespace Online_Shop
         {
             int number;
 
-            while (!int.TryParse(Console.ReadLine(), out number) || number > Storage.Products.Count || number <= 0 || Storage.Products[number - 1].Quantity == 0)
+            while (!int.TryParse(Console.ReadLine(), out number) 
+                || number > Storage.Products.Count 
+                || number <= 0 
+                || Storage.Products[number - 1].Quantity == 0)
             {
                 Console.WriteLine("Error.Id is missing or product not on sale");
             }
@@ -86,8 +114,13 @@ namespace Online_Shop
         {
             for (int i = 0; i < Storage.Basket.Count; i++)
             {
-                Console.WriteLine($"ID:{Storage.Basket[i].ID}\n NAME:{Storage.Basket[i].Name}\n PRICE:{Storage.Basket[i].Price}\n QUANTITY:{Storage.Basket[i].Quantity}\n DESCRIPTION:\n{Storage.Basket[i].Description}\n");
-                product.Line();
+                Console.WriteLine($"ID:{Storage.Basket[i].ID}\n " +
+                    $"NAME:{Storage.Basket[i].Name}\n " +
+                    $"PRICE:{Storage.Basket[i].Price}\n " +
+                    $"QUANTITY:{Storage.Basket[i].Quantity}\n " +
+                    $"DESCRIPTION:\n{Storage.Basket[i].Description}\n");
+
+                _product.Line();
             }
         }
 
@@ -107,8 +140,11 @@ namespace Online_Shop
             else
             {
                 ShowBasket();
+
                 Console.WriteLine("Do you want to buy these products ?");
+
                 Console.WriteLine("1.Yes\n2.No");
+
                 menu = GetNumber(count: 2);
 
                 switch (menu)
@@ -120,9 +156,13 @@ namespace Online_Shop
                             for (int i = 0; i < Storage.Basket.Count; i++)
                             {
                                 var productBasket = Storage.Basket[i];
+
                                 productBasket.Date = DateTime.Now;
+
                                 Storage.HistoryBuy.Add(productBasket);
-                                File.Write(Storage.HistoryBuy, Storage.CurrentUser.Login);
+
+                                File.Write(Storage.HistoryBuy, 
+                                    Storage.CurrentUser.Login);
                             }
 
                             Storage.Basket = new List<Product>();
@@ -147,14 +187,22 @@ namespace Online_Shop
 
             for (int i = 0; i < Storage.HistoryBuy.Count; i++)
             {
-                Console.WriteLine($"ID:{Storage.HistoryBuy[i].ID}\n NAME:{Storage.HistoryBuy[i].Name}\n PRICE:{Storage.HistoryBuy[i].Price}\n QUANTITY:{Storage.HistoryBuy[i].Quantity}\n DESCRIPTION:\n{Storage.HistoryBuy[i].Description}\n Date:\n{Storage.HistoryBuy[i].Date}");
-                product.Line();
+                Console.WriteLine($"ID:{Storage.HistoryBuy[i].ID}\n " +
+                    $"NAME:{Storage.HistoryBuy[i].Name}\n " +
+                    $"PRICE:{Storage.HistoryBuy[i].Price}\n " +
+                    $"QUANTITY:{Storage.HistoryBuy[i].Quantity}\n " +
+                    $"DESCRIPTION:\n{Storage.HistoryBuy[i].Description}\n " +
+                    $"Date:\n{Storage.HistoryBuy[i].Date}");
+
+                _product.Line();
             }
         }
 
         private int GetQuantityProduct(int number)
         {
-            while (!int.TryParse(Console.ReadLine(), out quantity) || quantity > number || quantity <= 0)
+            while (!int.TryParse(Console.ReadLine(), out _quantity) 
+                || _quantity > number 
+                || _quantity <= 0)
             {
                 if (number == 0)
                 {
@@ -166,26 +214,39 @@ namespace Online_Shop
                 }
             }
 
-            return quantity;
+            return _quantity;
         }
 
         public void FindProduct()
         {
             Console.Clear();
+
             string nameProduct;
+
             int count = 0;
+
             int numberMenu;
+
             Console.WriteLine("Enter product");
+
             nameProduct = Console.ReadLine();
 
-            for (int i = 0; i < Storage.Products.Count; i++)
+            for (int i = 0; i < Storage.Products.Count; i++) // в отдельный 
             {
                 string name = Storage.Products[i].Name;
+
                 if (name.ToLower().Contains(nameProduct.ToLower()))
                 {
-                    Console.WriteLine($"ID:{Storage.Products[i].ID}\n NAME:{Storage.Products[i].Name}\n PRICE:{Storage.Products[i].Price}\n QUANTITY:{Storage.Products[i].Quantity}\n DESCRIPTION:\n{Storage.Products[i].Description}");
-                    id = Storage.Products[i].ID;
-                    product.Line();
+                    Console.WriteLine($"ID:{Storage.Products[i].ID}\n " +
+                        $"NAME:{Storage.Products[i].Name}\n " +
+                        $"PRICE:{Storage.Products[i].Price}\n " +
+                        $"QUANTITY:{Storage.Products[i].Quantity}\n " +
+                        $"DESCRIPTION:\n{Storage.Products[i].Description}");
+
+                    _id = Storage.Products[i].ID;
+
+                    _product.Line();
+
                     count++;
                 }
             }
@@ -196,19 +257,23 @@ namespace Online_Shop
             }
             else
             {
-                Console.WriteLine("Would you like to add this product?");
+                Console.WriteLine("Would you like to add this product?"); // в метод 
+
                 Console.WriteLine("1.Yes\n2.No");
+
                 numberMenu = GetNumber(count: 2);
 
                 if (numberMenu == 2)
                 {
                     Console.Clear();
+
                     return;
                 }
                 else
                 {
                     Console.WriteLine("Enter quantity");
-                    quantity = GetQuantityProduct(Storage.Products[id - 1].Quantity);
+
+                    _quantity = GetQuantityProduct(Storage.Products[_id - 1].Quantity);
 
                     _timer.Start();
 
@@ -223,11 +288,17 @@ namespace Online_Shop
                     }
 
                     int temp;
-                    var productBasket = Storage.Products[id - 1];
-                    productBasket.Quantity -= quantity;
+
+                    var productBasket = Storage.Products[_id - 1];
+
+                    productBasket.Quantity -= _quantity;
+
                     temp = productBasket.Quantity;
-                    productBasket.Quantity = quantity;
+
+                    productBasket.Quantity = _quantity;
+
                     Storage.Basket.Add(productBasket);
+
                     productBasket.Quantity = temp;
                 }
             }
