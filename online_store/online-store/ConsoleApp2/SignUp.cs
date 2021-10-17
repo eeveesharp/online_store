@@ -6,7 +6,9 @@ namespace Online_Shop
     {
         public void SignUpMenu()
         {
-            File.Read("users");
+            File file = new File();
+
+            file.Read("users");
 
             User user = new User(GetName(),
                             GetLastName(),
@@ -25,7 +27,7 @@ namespace Online_Shop
 
             Storage.Users.Add(user);
 
-            File.Write(Storage.Users,
+            file.Write(Storage.Users,
                 "users");
 
             Storage.CurrentUser = user;

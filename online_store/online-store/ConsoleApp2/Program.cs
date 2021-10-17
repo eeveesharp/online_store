@@ -12,7 +12,9 @@ namespace Online_Shop
 
             Menu menu = new Menu();
 
-            File.ReadProduct("products");
+            File file = new File();
+
+            file.ReadProduct("products");
 
             logMenu.ShowMenu();
 

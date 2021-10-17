@@ -13,16 +13,20 @@ namespace Online_Shop
 
         private readonly Product _product;
 
+        private readonly File _file;
+
         public Basket()
         {
             _timer = new Timer();
 
             _product = new Product();
+
+            _file = new File();
         }
 
         public void AddProduct()
         {
-            File.ReadProduct("products");
+            _file.ReadProduct("products");
 
             while (true)
             {
@@ -151,7 +155,7 @@ namespace Online_Shop
                 {
                     case 1:
                         {
-                            File.Write(Storage.Products, "products");
+                            _file.Write(Storage.Products, "products");
 
                             for (int i = 0; i < Storage.Basket.Count; i++)
                             {
@@ -161,7 +165,7 @@ namespace Online_Shop
 
                                 Storage.HistoryBuy.Add(productBasket);
 
-                                File.Write(Storage.HistoryBuy, 
+                                _file.Write(Storage.HistoryBuy, 
                                     Storage.CurrentUser.Login);
                             }
 
@@ -183,7 +187,7 @@ namespace Online_Shop
 
         public void ShowHistoryBuy()
         {
-            File.ReadHistoryBuy(Storage.CurrentUser.Login);
+            _file.ReadHistoryBuy(Storage.CurrentUser.Login);
 
             for (int i = 0; i < Storage.HistoryBuy.Count; i++)
             {

@@ -12,11 +12,13 @@ namespace Online_Shop
 
                 Basket basket = new Basket();
 
+                File file = new File();
+
                 Console.WriteLine("1.Show catalog\n2.Show basket\n3.Product search by name\n4.Show history buy\n5.Exit");
 
                 menu = GetCorrectNumber();
 
-                File.ReadHistoryBuy(Storage.CurrentUser.Login);
+                file.ReadHistoryBuy(Storage.CurrentUser.Login);
 
 
                 switch (menu)

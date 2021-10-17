@@ -38,6 +38,8 @@ namespace Online_Shop
 
         private void Work()
         {
+            File file = new File();
+
             while (!IsStop)
             {
                 Task.Delay(Step).Wait();
@@ -51,7 +53,7 @@ namespace Online_Shop
 
                     IsStop = true;
 
-                    File.ReadProduct("products");
+                    file.ReadProduct("products");
                 }
             }
         }

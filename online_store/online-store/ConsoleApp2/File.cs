@@ -5,9 +5,9 @@ using System.IO;
 
 namespace Online_Shop
 {
-    public static class File
+    public class File : IFile
     {
-        public static void Write(IEnumerable<object> items,
+        public void Write(IEnumerable<object> items,
             string fileName)
         {
             using (FileStream fstream = new FileStream($"{fileName}.json", FileMode.Create))
@@ -18,7 +18,7 @@ namespace Online_Shop
             }
         }
 
-        public static void Read(string fileName)
+        public void Read(string fileName)
         {
             Storage.Users = new List<User>();
 
@@ -30,7 +30,7 @@ namespace Online_Shop
             }
         }
 
-        public static void ReadProduct(string fileName)
+        public void ReadProduct(string fileName)
         {
             Storage.Products = new List<Product>();
 
@@ -42,7 +42,7 @@ namespace Online_Shop
             }
         }
 
-        public static void ReadHistoryBuy(string fileName)
+        public void ReadHistoryBuy(string fileName)
         {
             Storage.HistoryBuy = new List<Product>();
 
@@ -54,7 +54,7 @@ namespace Online_Shop
             }
         }
 
-        private static string ReadTextFromFile(string filename)
+        public string ReadTextFromFile(string filename)
         {
             string fileContent = string.Empty;
 

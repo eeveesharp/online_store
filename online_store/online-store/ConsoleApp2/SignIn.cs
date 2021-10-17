@@ -6,7 +6,9 @@ namespace Online_Shop
     {
         public void SignInMenu()
         {
-            File.Read("users");
+            File file = new File();
+
+            file.Read("users");
 
             User user = new User(
                 GetLogin(),
