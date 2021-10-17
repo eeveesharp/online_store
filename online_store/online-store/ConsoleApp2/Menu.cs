@@ -25,19 +25,19 @@ namespace Online_Shop
                 {
                     case 1:
                         {
-                            basket.AddProduct();
+                            basket.MenuAddProductInBasket();
 
                             break;
                         }
                     case 2:
                         {
-                            basket.BuyProduct();
+                            basket.BuyProductInBasket();
 
                             break;
                         }
                     case 3:
                         {
-                            basket.FindProduct();
+                            basket.BuyFoundProduct();
 
                             break;
                         }
