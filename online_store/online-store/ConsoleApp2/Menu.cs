@@ -25,7 +25,7 @@ namespace Online_Shop
                 {
                     case 1:
                         {
-                            basket.MenuAddProductInBasket();
+                            basket.GetMenuAddProductInBasket();
 
                             break;
                         }
@@ -37,7 +37,7 @@ namespace Online_Shop
                         }
                     case 3:
                         {
-                            basket.BuyFoundProduct();
+                            basket.CheckFoundProduct();
 
                             break;
                         }

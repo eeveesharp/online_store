@@ -51,11 +51,11 @@ namespace Online_Shop
             }
             else
             {               
-                MenuConfirmProduct();
+                GetMenuBuyProduct();
             }
         }
 
-        private void MenuConfirmProduct()
+        private void GetMenuBuyProduct()
         {
             ShowBasket();
 
@@ -63,17 +63,19 @@ namespace Online_Shop
 
             Console.WriteLine("1.Yes\n2.No");
 
-            int menu = GetNumber(count: 2);
+            int menu = GetNumber(range: 2);
 
             switch (menu)
             {
                 case 1:
                     {
-                        ConfirmProduct();
+                        BuyProduct();
                         break;
                     }
                 case 2:
                     {
+                         _file.ReadProduct("products");
+
                         return;
                     }
                 default:
@@ -81,19 +83,17 @@ namespace Online_Shop
             }
         }
 
-        public void MenuAddProductInBasket()
+        public void GetMenuAddProductInBasket()
         {
             while (true)
             {
-                _file.ReadProduct("products");
-
                 _product.ShowProduct();
 
                 Console.WriteLine("Would you like to add a product in basket?"); // в метод 
 
                 Console.WriteLine("1.Yes\n2.No");
 
-                int menu = GetNumber(count: 2);
+                int menu = GetNumber(range: 2);
 
                 switch (menu)
                 {
@@ -104,17 +104,17 @@ namespace Online_Shop
                         }
                     case 2:
                         {
+                            Console.Clear();
+
                             return;
                         }
                     default:
                         break;
                 }
-
-                Console.Clear();
             }
         }
 
-        private void ConfirmProduct()
+        private void BuyProduct()
         {
             _file.Write(Storage.Products, "products");
 
@@ -171,49 +171,6 @@ namespace Online_Shop
             return _quantity;
         }
 
-        public void BuyFoundProduct()
-        {
-            Console.Clear();
-
-            int count;
-
-            count = SearchProduct();
-
-            CheckFoundProduct(count);
-        }
-
-        public void AddFoundProductInBasket()
-        {
-            _file.ReadProduct("products");
-
-            Console.WriteLine("Enter ID");
-
-            _id = GetId();
-
-            Console.WriteLine("Enter quantity");
-
-            _quantity = GetQuantityProduct(Storage.Products[_id].Quantity);
-
-            _timer.Start();
-
-            if (Storage.Basket is null)
-            {
-                Storage.Basket = new List<Product>();
-            }
-
-            if (Storage.HistoryBuy is null)
-            {
-                Storage.HistoryBuy = new List<Product>();
-            }
-
-            Storage.Basket.Add(new Product(Storage.Products[_id].ID,
-                Storage.Products[_id].Name,
-                Storage.Products[_id].Price, _quantity,
-                Storage.Products[_id].Description));
-
-            Storage.Products[_id].Quantity -= _quantity;
-        }
-
         private void AddProductInBasket()
         {
             Console.WriteLine("Enter ID");
@@ -242,39 +199,35 @@ namespace Online_Shop
                 Storage.Products[_id].Description));
 
             Storage.Products[_id].Quantity -= _quantity;
-
         }
 
-        private void CheckFoundProduct(int count)
+        public void CheckFoundProduct()
         {
-            int numberMenu;
-
-            if (count == 0)
+            if (!IsSearchProduct())
             {
                 Console.WriteLine("Product not found");
             }
             else
             {
-                MenuAddFoundProductInBasket();
+                GetFoundProductInBasket();
             }
         }
 
-        private void MenuAddFoundProductInBasket()
+        private void GetFoundProductInBasket()
         {
             int menuNumber;
 
-            Console.WriteLine("Would you like to add a product?"); // в метод 
+            Console.WriteLine("Would you like to add a product?");
 
             Console.WriteLine("1.Yes\n2.No");
 
-            menuNumber = GetNumber(count: 2);
+            menuNumber = GetNumber(range: 2);
 
             switch (menuNumber)
             {
                 case 1:
                     {
-                        AddFoundProductInBasket();
-
+                        AddProductInBasket();
                         break;
                     }
                 case 2:
@@ -288,9 +241,9 @@ namespace Online_Shop
             }
         }
 
-        private int SearchProduct()
+        private bool IsSearchProduct()
         {
-            int count = 0;
+            bool isSearchProduct = false;
 
             string nameProduct;
 
@@ -298,7 +251,7 @@ namespace Online_Shop
 
             nameProduct = Console.ReadLine();
 
-            for (int i = 0; i < Storage.Products.Count; i++) // в отдельный 
+            for (int i = 0; i < Storage.Products.Count; i++) 
             {
                 string name = Storage.Products[i].Name;
 
@@ -314,11 +267,11 @@ namespace Online_Shop
 
                     _product.Line();
 
-                    count++;
+                    isSearchProduct = true;
                 }
             }
 
-            return count;
+            return isSearchProduct;
         }
 
         public static void DeleteProductsByTimer()
@@ -326,12 +279,12 @@ namespace Online_Shop
             Storage.Basket = new List<Product>();
         }
 
-        private int GetNumber(int count)
+        private int GetNumber(int range)
         {
             int number;
 
             while (!int.TryParse(Console.ReadLine(), out number)
-                || number > count
+                || number > range
                 || number <= 0)
             {
                 Console.WriteLine("Error.Id");
