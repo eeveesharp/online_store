@@ -15,6 +15,8 @@ namespace Online_Shop
 
         private readonly File _file;
 
+        private List<int> _arrayIdFoundProduct = new List<int>();
+
         public Basket()
         {
             _timer = new Timer();
@@ -201,6 +203,40 @@ namespace Online_Shop
             Storage.Products[_id].Quantity -= _quantity;
         }
 
+        private void AddFoundProductInBasket()
+        {
+            do
+            {
+                Console.WriteLine("Enter ID");
+
+                _id = GetId();
+
+            } while (!IsGetIdFoundProduct());
+
+            Console.WriteLine("Enter quantity");
+
+            _quantity = GetQuantityProduct(Storage.Products[_id].Quantity);
+
+            _timer.Start();
+
+            if (Storage.Basket is null)
+            {
+                Storage.Basket = new List<Product>();
+            }
+
+            if (Storage.HistoryBuy is null)
+            {
+                Storage.HistoryBuy = new List<Product>();
+            }
+
+            Storage.Basket.Add(new Product(Storage.Products[_id].ID,
+                Storage.Products[_id].Name,
+                Storage.Products[_id].Price, _quantity,
+                Storage.Products[_id].Description));
+
+            Storage.Products[_id].Quantity -= _quantity;
+        }
+
         public void CheckFoundProduct()
         {
             if (!IsSearchProduct())
@@ -227,7 +263,10 @@ namespace Online_Shop
             {
                 case 1:
                     {
-                        AddProductInBasket();
+                        AddFoundProductInBasket();
+
+                        Console.Clear();
+
                         break;
                     }
                 case 2:
@@ -266,6 +305,8 @@ namespace Online_Shop
                     _id = Storage.Products[i].ID;
 
                     _product.Line();
+
+                    _arrayIdFoundProduct.Add(_id);
 
                     isSearchProduct = true;
                 }
@@ -306,6 +347,24 @@ namespace Online_Shop
             }
 
             return number - 1;
+        }
+
+        private bool IsGetIdFoundProduct()
+        {
+            bool isGetIdFoundProduct = false;
+
+            for (int i = 0; i <_arrayIdFoundProduct.Count ; i++)
+            {
+                for (int j = 0; j < _arrayIdFoundProduct.Count; j++)
+                {
+                    if (_arrayIdFoundProduct[i] == _id + 1)
+                    {
+                        isGetIdFoundProduct = true;
+                    }
+                }
+            }
+
+            return isGetIdFoundProduct;
         }
     }
 }
