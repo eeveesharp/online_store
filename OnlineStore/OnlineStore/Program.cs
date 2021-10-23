@@ -1,14 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using OnlineStore.Implementations;
+using OnlineStore.Menus;
+using OnlineStore.Storages;
+using System.Collections.Generic;
 
-namespace Online_Shop
+namespace OnlineStore.Entities
 {
-    public class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {
             Storage.Users = new List<User>();
 
-            LogMenu logMenu = new LogMenu();
+            AuthMenu logMenu = new AuthMenu();
 
             Menu menu = new Menu();
 

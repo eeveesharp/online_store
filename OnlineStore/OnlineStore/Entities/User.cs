@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Online_Shop
+namespace OnlineStore.Entities
 {
     public class User
     {

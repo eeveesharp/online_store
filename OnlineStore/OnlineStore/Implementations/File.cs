@@ -1,16 +1,19 @@
 ﻿using Newtonsoft.Json;
+using OnlineStore.Entities;
+using OnlineStore.Interfaces;
+using OnlineStore.Storages;
 using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace Online_Shop
+namespace OnlineStore.Implementations
 {
     public class File : IFile
     {
         public void Write(IEnumerable<object> items,
             string fileName)
         {
-            using (FileStream fstream = new FileStream($"{fileName}.json", FileMode.Create))
+            using (FileStream fstream = new FileStream(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + $"\\jsonFiles\\{fileName}.json", FileMode.Create))
             {
                 byte[] array = System.Text.Encoding.Default.GetBytes(JsonConvert.SerializeObject(items));
 
@@ -60,7 +63,7 @@ namespace Online_Shop
 
             try
             {
-                using (FileStream fstream = System.IO.File.OpenRead($"{filename}.json"))
+                using (FileStream fstream = System.IO.File.OpenRead(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + $"\\jsonFiles\\{filename}.json"))
                 {
                     byte[] array = new byte[fstream.Length];
 

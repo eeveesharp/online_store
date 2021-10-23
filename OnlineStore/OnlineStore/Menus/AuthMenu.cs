@@ -1,8 +1,9 @@
-﻿using System;
+﻿using OnlineStore.Services;
+using System;
 
-namespace Online_Shop
+namespace OnlineStore.Menus
 {
-    public class LogMenu
+    public class AuthMenu
     {
         public void ShowMenu()
         {

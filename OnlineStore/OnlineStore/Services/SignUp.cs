@@ -1,6 +1,9 @@
-﻿using System;
+﻿using OnlineStore.Entities;
+using OnlineStore.Implementations;
+using OnlineStore.Storages;
+using System;
 
-namespace Online_Shop
+namespace OnlineStore.Services
 {
     public class SignUp
     {

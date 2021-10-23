@@ -1,8 +1,9 @@
 ﻿using Newtonsoft.Json;
+using OnlineStore.Storages;
 using System;
 using System.Collections.Generic;
 
-namespace Online_Shop
+namespace OnlineStore.Entities
 {
     public class Product
     {
@@ -34,20 +35,6 @@ namespace Online_Shop
         public Product()
         {
 
-        }
-
-        public void ShowProduct()
-        {
-            for (int i = 0; i < Storage.Products.Count; i++)
-            {
-                Console.WriteLine($"ID:{Storage.Products[i].ID}\n NAME:{Storage.Products[i].Name}\n PRICE:{Storage.Products[i].Price}\n QUANTITY:{Storage.Products[i].Quantity}\n DESCRIPTION:\n{Storage.Products[i].Description}");
-                Line();
-            }
-        }
-
-        public void Line()
-        {
-            Console.WriteLine("________________________________________________________________________________________________________________________");
         }
     }
 }

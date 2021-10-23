@@ -1,12 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration.Json;
-using Newtonsoft.Json;
+using OnlineStore.Implementations;
 using System;
-using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 
-namespace Online_Shop
+namespace OnlineStore.Services
 {
     public class Timer
     {
@@ -17,7 +14,7 @@ namespace Online_Shop
         public int ExpiredTime { get; private set; }
 
         private readonly IConfiguration _configuration = new ConfigurationBuilder()
-                .AddJsonFile("timer.json")
+                .AddJsonFile(System.IO.Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\jsonFiles\\timer.json")
                 .Build();
 
         public Timer()

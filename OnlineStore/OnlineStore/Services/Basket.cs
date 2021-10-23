@@ -1,7 +1,10 @@
-﻿using System;
+﻿using OnlineStore.Entities;
+using OnlineStore.Implementations;
+using OnlineStore.Storages;
+using System;
 using System.Collections.Generic;
 
-namespace Online_Shop
+namespace OnlineStore.Services
 {
     public class Basket
     {
@@ -36,7 +39,7 @@ namespace Online_Shop
                     $"QUANTITY:{Storage.Basket[i].Quantity}\n " +
                     $"DESCRIPTION:\n{Storage.Basket[i].Description}\n");
 
-                _product.Line();
+                Line();
             }
         }
 
@@ -52,7 +55,7 @@ namespace Online_Shop
                 Console.WriteLine("The basket is empty");
             }
             else
-            {               
+            {
                 GetMenuBuyProduct();
             }
         }
@@ -76,7 +79,7 @@ namespace Online_Shop
                     }
                 case 2:
                     {
-                         _file.ReadProduct("products");
+                        _file.ReadProduct("products");
 
                         return;
                     }
@@ -89,7 +92,7 @@ namespace Online_Shop
         {
             while (true)
             {
-                _product.ShowProduct();
+                ShowProduct();
 
                 Console.WriteLine("Would you like to add a product in basket?"); // в метод 
 
@@ -114,6 +117,20 @@ namespace Online_Shop
                         break;
                 }
             }
+        }
+
+        private void ShowProduct()
+        {
+            for (int i = 0; i < Storage.Products.Count; i++)
+            {
+                Console.WriteLine($"ID:{Storage.Products[i].ID}\n NAME:{Storage.Products[i].Name}\n PRICE:{Storage.Products[i].Price}\n QUANTITY:{Storage.Products[i].Quantity}\n DESCRIPTION:\n{Storage.Products[i].Description}");
+                Line();
+            }
+        }
+
+        private void Line()
+        {
+            Console.WriteLine("________________________________________________________________________________________________________________________");
         }
 
         private void BuyProduct()
@@ -150,7 +167,7 @@ namespace Online_Shop
                     $"DESCRIPTION:\n{Storage.HistoryBuy[i].Description}\n " +
                     $"Date:\n{Storage.HistoryBuy[i].Date}");
 
-                _product.Line();
+                Line();
             }
         }
 
@@ -290,7 +307,7 @@ namespace Online_Shop
 
             nameProduct = Console.ReadLine();
 
-            for (int i = 0; i < Storage.Products.Count; i++) 
+            for (int i = 0; i < Storage.Products.Count; i++)
             {
                 string name = Storage.Products[i].Name;
 
@@ -304,7 +321,7 @@ namespace Online_Shop
 
                     _id = Storage.Products[i].ID;
 
-                    _product.Line();
+                    Line();
 
                     _arrayIdFoundProduct.Add(_id);
 
@@ -353,7 +370,7 @@ namespace Online_Shop
         {
             bool isGetIdFoundProduct = false;
 
-            for (int i = 0; i <_arrayIdFoundProduct.Count ; i++)
+            for (int i = 0; i < _arrayIdFoundProduct.Count; i++)
             {
                 for (int j = 0; j < _arrayIdFoundProduct.Count; j++)
                 {

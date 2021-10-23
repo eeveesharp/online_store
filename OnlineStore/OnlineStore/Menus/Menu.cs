@@ -1,6 +1,9 @@
-﻿using System;
+﻿using OnlineStore.Implementations;
+using OnlineStore.Services;
+using OnlineStore.Storages;
+using System;
 
-namespace Online_Shop
+namespace OnlineStore.Menus
 {
     public class Menu
     {

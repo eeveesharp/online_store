@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using OnlineStore.Entities;
+using System.Collections.Generic;
 
-namespace Online_Shop
+namespace OnlineStore.Storages
 {
     public static class Storage
     {

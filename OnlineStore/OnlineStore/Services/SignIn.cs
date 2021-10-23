@@ -1,6 +1,9 @@
-﻿using System;
+﻿using OnlineStore.Entities;
+using OnlineStore.Implementations;
+using OnlineStore.Storages;
+using System;
 
-namespace Online_Shop
+namespace OnlineStore.Services
 {
     public class SignIn
     {
@@ -14,7 +17,7 @@ namespace Online_Shop
                 GetLogin(),
                 GetPassword());
 
-            while (!IsCheckSignIn(user.Login, 
+            while (!IsCheckSignIn(user.Login,
                 user.Password))
             {
                 Console.WriteLine("Incorrect login or password");
@@ -29,12 +32,12 @@ namespace Online_Shop
             Storage.CurrentUser = user;
         }
 
-        private bool IsCheckSignIn(string login, 
+        private bool IsCheckSignIn(string login,
             string password)
         {
             for (int i = 0; i < Storage.Users.Count; i++)
             {
-                if (login == Storage.Users[i].Login 
+                if (login == Storage.Users[i].Login
                     && password == Storage.Users[i].Password)
                 {
                     return true;
