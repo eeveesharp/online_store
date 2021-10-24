@@ -1,0 +1,87 @@
+﻿using Newtonsoft.Json;
+using OnlineStore.Entities;
+using OnlineStore.Interfaces;
+using OnlineStore.Storages;
+using System;
+using System.Collections.Generic;
+using System.IO;
+
+namespace OnlineStore.Implementations
+{
+    public class File : IFile
+    {
+        public void Write(IEnumerable<object> items,
+            string fileName)
+        {
+            using (FileStream fstream = new FileStream(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName +
+                $"\\jsonFiles\\{fileName}.json", 
+                FileMode.Create))
+            {
+                byte[] array = System.Text.Encoding.Default.GetBytes(JsonConvert.SerializeObject(items));
+
+                fstream.Write(array, 0, array.Length);
+            }
+        }
+
+        public void Read(string fileName)
+        {
+            Storage.Users = new List<User>();
+
+            Storage.Users = JsonConvert.DeserializeObject<List<User>>(ReadTextFromFile(fileName));
+
+            if (Storage.Users is null)
+            {
+                Storage.Users = new List<User>();
+            }
+        }
+
+        public void ReadProduct(string fileName)
+        {
+            Storage.Products = new List<Product>();
+
+            Storage.Products = JsonConvert.DeserializeObject<List<Product>>(ReadTextFromFile(fileName));
+
+            if (Storage.Products is null)
+            {
+                Storage.Products = new List<Product>();
+            }
+        }
+
+        public void ReadHistoryBuy(string fileName)
+        {
+            Storage.HistoryBuy = new List<Product>();
+
+            Storage.HistoryBuy = JsonConvert.DeserializeObject<List<Product>>(ReadTextFromFile(fileName));
+
+            if (Storage.HistoryBuy is null)
+            {
+                Storage.HistoryBuy = new List<Product>();
+            }
+        }
+
+        public string ReadTextFromFile(string filename)
+        {
+            string fileContent = string.Empty;
+
+            try
+            {
+                using (FileStream fstream = System.IO.File.OpenRead(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + 
+                    $"\\jsonFiles\\{filename}.json"))
+                {
+                    byte[] array = new byte[fstream.Length];
+
+                    fstream.Read(array, 0, array.Length);
+
+                    fileContent = System.Text.Encoding.Default.GetString(array);
+                }
+            }
+            catch (FileNotFoundException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return fileContent;
+        }
+    }
+}
+
