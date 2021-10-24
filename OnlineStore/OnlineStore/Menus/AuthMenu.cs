@@ -8,6 +8,7 @@ namespace OnlineStore.Menus
         public void ShowMenu()
         {
             int menu;
+
             SignUp singUp = new SignUp();
 
             SignIn singIn = new SignIn();
@@ -41,7 +42,8 @@ namespace OnlineStore.Menus
         {
             int number;
 
-            while (!int.TryParse(Console.ReadLine(), out number) || number <= 0)
+            while (!int.TryParse(Console.ReadLine(), out number) ||
+                number <= 0)
             {
                 Console.WriteLine("Error");
             }

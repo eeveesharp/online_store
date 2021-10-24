@@ -14,7 +14,8 @@ namespace OnlineStore.Services
         public int ExpiredTime { get; private set; }
 
         private readonly IConfiguration _configuration = new ConfigurationBuilder()
-                .AddJsonFile(System.IO.Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + "\\jsonFiles\\timer.json")
+                .AddJsonFile(System.IO.Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName +
+            "\\jsonFiles\\timer.json")
                 .Build();
 
         public Timer()
@@ -40,6 +41,7 @@ namespace OnlineStore.Services
             while (!IsStop)
             {
                 Task.Delay(Step).Wait();
+
                 ExpiredTime -= Step;
 
                 if (ExpiredTime < 0)

@@ -84,6 +84,7 @@ namespace OnlineStore.Services
                         return;
                     }
                 default:
+
                     break;
             }
         }
@@ -96,7 +97,8 @@ namespace OnlineStore.Services
 
                 Console.WriteLine("Would you like to add a product in basket?"); // в метод 
 
-                Console.WriteLine("1.Yes\n2.No");
+                Console.WriteLine("1.Yes\n" +
+                    "2.No");
 
                 int menu = GetNumber(range: 2);
 
@@ -123,7 +125,12 @@ namespace OnlineStore.Services
         {
             for (int i = 0; i < Storage.Products.Count; i++)
             {
-                Console.WriteLine($"ID:{Storage.Products[i].ID}\n NAME:{Storage.Products[i].Name}\n PRICE:{Storage.Products[i].Price}\n QUANTITY:{Storage.Products[i].Quantity}\n DESCRIPTION:\n{Storage.Products[i].Description}");
+                Console.WriteLine($"ID:{Storage.Products[i].ID}\n " +
+                    $"NAME:{Storage.Products[i].Name}\n " +
+                    $"PRICE:{Storage.Products[i].Price}\n " +
+                    $"QUANTITY:{Storage.Products[i].Quantity}\n " +
+                    $"DESCRIPTION:\n{Storage.Products[i].Description}");
+
                 Line();
             }
         }
@@ -135,7 +142,8 @@ namespace OnlineStore.Services
 
         private void BuyProduct()
         {
-            _file.Write(Storage.Products, "products");
+            _file.Write(Storage.Products,
+                "products");
 
             for (int i = 0; i < Storage.Basket.Count; i++)
             {

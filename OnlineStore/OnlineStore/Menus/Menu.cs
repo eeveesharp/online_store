@@ -17,7 +17,10 @@ namespace OnlineStore.Menus
 
                 File file = new File();
 
-                Console.WriteLine("1.Show catalog\n2.Show basket\n3.Product search by name\n4.Show history buy\n5.Exit");
+                Console.WriteLine("1.Show catalog\n" +
+                    "2.Show basket\n" +
+                    "3.Product search by name\n" +
+                    "4.Show history buy\n5.Exit");
 
                 menu = GetCorrectNumber();
 
@@ -53,6 +56,7 @@ namespace OnlineStore.Menus
                     case 5:
                         {
                             Environment.Exit(0);
+
                             break;
                         }
                     default:
@@ -66,7 +70,8 @@ namespace OnlineStore.Menus
         {
             int number;
 
-            while (!int.TryParse(Console.ReadLine(), out number) || number <= 0)
+            while (!int.TryParse(Console.ReadLine(), out number) ||
+                number <= 0)
             {
                 Console.WriteLine("Error");
             }

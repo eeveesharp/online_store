@@ -13,7 +13,9 @@ namespace OnlineStore.Implementations
         public void Write(IEnumerable<object> items,
             string fileName)
         {
-            using (FileStream fstream = new FileStream(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + $"\\jsonFiles\\{fileName}.json", FileMode.Create))
+            using (FileStream fstream = new FileStream(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName +
+                $"\\jsonFiles\\{fileName}.json", 
+                FileMode.Create))
             {
                 byte[] array = System.Text.Encoding.Default.GetBytes(JsonConvert.SerializeObject(items));
 
@@ -63,7 +65,8 @@ namespace OnlineStore.Implementations
 
             try
             {
-                using (FileStream fstream = System.IO.File.OpenRead(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + $"\\jsonFiles\\{filename}.json"))
+                using (FileStream fstream = System.IO.File.OpenRead(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + 
+                    $"\\jsonFiles\\{filename}.json"))
                 {
                     byte[] array = new byte[fstream.Length];
 
